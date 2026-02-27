@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Street Fix
 
-## Getting Started
+Community Resource Sharing App for Informal Settlements in Blantyre, Malawi.
 
-First, run the development server:
+## Overview
+
+Street Fix empowers residents of informal settlements (Mbayani, Ntopwa, Ndirande) to report issues, find community resources, and connect with neighbors.
+
+### Features
+
+- **Issue Reporting**: Document broken water points, sanitation problems, and waste issues with photos and GPS
+- **Community Map**: Interactive map showing nearby resources (taps, clinics, waste collection points)
+- **Forum**: Share tips on home improvements, emergency contacts, and community discussions
+- **Neighbor Shoutouts**: Thank helpful neighbors and celebrate community spirit
+- **Admin Dashboard**: Manage issues, resources, and moderate content
+
+## Tech Stack
+
+- **Framework**: Next.js 16 with App Router
+- **Database**: Supabase (PostgreSQL + Auth + Storage)
+- **Maps**: Leaflet.js with OpenStreetMap
+- **UI**: Tailwind CSS + shadcn/ui
+- **Deployment**: Vercel
+
+## Quick Start
+
+### 1. Set up Supabase
+
+```bash
+# Create account at https://supabase.com
+# Create new project
+# Copy your credentials
+```
+
+### 2. Environment Variables
+
+```bash
+cp docs-w/.env.example .env.local
+# Edit .env.local with your Supabase credentials
+```
+
+### 3. Install Dependencies
+
+```bash
+npm install
+# Or use the install script
+./docs-w/INSTALL_PACKAGES.sh
+```
+
+### 4. Run Database Migrations
+
+Copy the SQL from `docs-w/DATABASE_SCHEMA.sql` and run it in Supabase SQL Editor.
+
+### 5. Start Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Contributing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This is a community-focused project. Contributions welcome!
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
+MIT
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Building better communities in Blantyre**
