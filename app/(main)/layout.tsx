@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
@@ -5,24 +6,28 @@ import { MapPin, AlertCircle, Map, MessageSquare, Heart, LayoutDashboard } from 
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { LogoutButton } from "@/components/logout-button";
 
+const getUser = cache(async () => {
+  const supabase = await createClient();
+  return await supabase.auth.getUser();
+});
+
 export default async function MainLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = await createClient();
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await getUser();
 
   if (!user) {
     redirect("/auth/login");
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-screen flex flex-col">
       {/* Header */}
-      <header className="border-b sticky top-0 bg-background z-50">
+      <header className="border-b sticky top-0 bg-background z-50 flex-shrink-0">
         <div className="max-w-7xl mx-auto flex justify-between items-center p-4 px-6">
           <Link href="/" className="flex items-center gap-2 font-bold text-xl">
             <MapPin className="h-6 w-6" />
@@ -36,9 +41,9 @@ export default async function MainLayout({
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 flex">
+      <div className="flex-1 flex overflow-hidden">
         {/* Desktop Sidebar */}
-        <aside className="hidden md:block w-64 border-r">
+        <aside className="hidden md:block w-64 border-r overflow-y-auto">
           <nav className="p-4 space-y-2">
             <Link
               href="/issues"
@@ -81,13 +86,13 @@ export default async function MainLayout({
         </aside>
 
         {/* Main Content Area */}
-        <main className="flex-1 overflow-auto">
+        <main className="flex-1 overflow-y-auto">
           {children}
         </main>
       </div>
 
       {/* Mobile Bottom Navigation */}
-      <nav className="md:hidden border-t bg-background sticky bottom-0">
+      <nav className="md:hidden border-t bg-background sticky bottom-0 flex-shrink-0">
         <div className="flex justify-around items-center p-2">
           <Link href="/issues" className="flex flex-col items-center gap-1 p-2">
             <AlertCircle className="h-5 w-5" />
