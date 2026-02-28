@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
   title: "Street Fix - Community Resource Sharing",
   description: "Report issues, find resources, and connect with neighbors in Blantyre's informal settlements. Building better communities together.",
+  icons: {
+    icon: "/icon2.jpeg",
+  },
 };
 
 const geistSans = Geist({

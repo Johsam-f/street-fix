@@ -63,7 +63,7 @@ export default function Home() {
           <div className="pt-8">
             <Link
               href="/auth/login"
-              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90"
+              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-foreground hover:bg-primary-foreground/60 transition-colors"
             >
               Get Started
             </Link>
@@ -73,7 +73,7 @@ export default function Home() {
 
       <footer className="border-t py-6">
         <div className="max-w-7xl mx-auto px-6 text-center text-sm text-muted-foreground">
-          <p>Street Fix - Empowering communities in Blantyre 🇲🇼</p>
+          <p>Street Fix - Empowering communities in Blantyre </p>
         </div>
       </footer>
     </main>
