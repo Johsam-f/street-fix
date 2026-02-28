@@ -25,7 +25,7 @@ export default function Home() {
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-16">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <div className="space-y-4">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent">
               Building Better Communities
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -35,24 +35,24 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 mt-12">
-            <div className="p-6 border rounded-lg space-y-2">
-              <AlertCircle className="h-8 w-8 mx-auto" />
+            <div className="p-6 border rounded-lg space-y-2 hover:border-orange-500/50 transition-colors">
+              <AlertCircle className="h-8 w-8 mx-auto text-orange-500" />
               <h3 className="font-semibold text-lg">Report Issues</h3>
               <p className="text-sm text-muted-foreground">
                 Document broken water points, sanitation problems, and waste issues
               </p>
             </div>
 
-            <div className="p-6 border rounded-lg space-y-2">
-              <MapPin className="h-8 w-8 mx-auto" />
+            <div className="p-6 border rounded-lg space-y-2 hover:border-blue-500/50 transition-colors">
+              <MapPin className="h-8 w-8 mx-auto text-blue-500" />
               <h3 className="font-semibold text-lg">Community Map</h3>
               <p className="text-sm text-muted-foreground">
                 Find nearby taps, clinics, and waste collection points
               </p>
             </div>
 
-            <div className="p-6 border rounded-lg space-y-2">
-              <Heart className="h-8 w-8 mx-auto" />
+            <div className="p-6 border rounded-lg space-y-2 hover:border-pink-500/50 transition-colors">
+              <Heart className="h-8 w-8 mx-auto text-pink-500" />
               <h3 className="font-semibold text-lg">Connect</h3>
               <p className="text-sm text-muted-foreground">
                 Share tips, thank neighbors, and build community
@@ -62,8 +62,8 @@ export default function Home() {
 
           <div className="pt-8">
             <Link
-              href="/auth/login"
-              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-foreground hover:bg-primary-foreground/60 transition-colors"
+              href="/issues"
+              className="inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-md text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 transition-all shadow-lg hover:shadow-xl"
             >
               Get Started
             </Link>
