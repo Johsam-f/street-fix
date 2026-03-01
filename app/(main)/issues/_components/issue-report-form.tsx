@@ -60,7 +60,6 @@ export function IssueReportForm() {
           const lng = position.coords.longitude;
           const accuracy = position.coords.accuracy;
           
-          console.log(`Location accuracy: ${accuracy} meters`);
           setLocation({ lat, lng });
           await reverseGeocode(lat, lng);
           setIsLoadingLocation(false);
