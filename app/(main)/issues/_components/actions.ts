@@ -49,7 +49,7 @@ export async function createIssue(input: CreateIssueInput) {
       
       const fileExt = fileName.split('.').pop();
       const uniqueFileName = `${user.id}-${Date.now()}.${fileExt}`;
-      const filePath = `issue-images/${uniqueFileName}`;
+      const filePath = `issues/${uniqueFileName}`;
 
       const { error: uploadError } = await supabase.storage
         .from('issue-images')
