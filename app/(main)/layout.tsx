@@ -6,6 +6,8 @@ import { MapPin, AlertCircle, Map, MessageSquare, Heart, LayoutDashboard } from 
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { LogoutButton } from "@/components/logout-button";
 
+export const dynamic = 'force-dynamic';
+
 const getUser = cache(async () => {
   const supabase = await createClient();
   return await supabase.auth.getUser();

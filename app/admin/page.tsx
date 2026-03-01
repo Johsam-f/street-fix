@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 const getUser = cache(async () => {
   const supabase = await createClient();
   return await supabase.auth.getUser();
