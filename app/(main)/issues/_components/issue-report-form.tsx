@@ -58,14 +58,27 @@ export function IssueReportForm() {
         async (position) => {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
+          const accuracy = position.coords.accuracy;
+          
+          console.log(`Location accuracy: ${accuracy} meters`);
           setLocation({ lat, lng });
           await reverseGeocode(lat, lng);
           setIsLoadingLocation(false);
+          
+          // Notify user if accuracy is low
+          if (accuracy > 50) {
+            toast.info(`Location captured with ${Math.round(accuracy)}m accuracy. For better accuracy, ensure GPS is enabled.`);
+          }
         },
         (error) => {
           console.error('Error getting location:', error);
           alert('Unable to get your location. Please enable location services.');
           setIsLoadingLocation(false);
+        },
+        {
+          enableHighAccuracy: true,  // Use GPS for high accuracy
+          timeout: 10000,             // Wait up to 10 seconds
+          maximumAge: 0               // Don't use cached position
         }
       );
     } else {
