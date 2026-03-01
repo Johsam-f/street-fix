@@ -35,21 +35,23 @@ Street Fix empowers residents of informal settlements (Mbayani, Ntopwa, Ndirande
 ### 2. Environment Variables
 
 ```bash
-cp docs-w/.env.example .env.local
+# Copy the example file
+cp .env.example .env.local
+
 # Edit .env.local with your Supabase credentials
+# NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
+# NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 ```
 
 ### 3. Install Dependencies
 
 ```bash
 npm install
-# Or use the install script
-./docs-w/INSTALL_PACKAGES.sh
 ```
 
 ### 4. Run Database Migrations
 
-Copy the SQL from `docs-w/DATABASE_SCHEMA.sql` and run it in Supabase SQL Editor.
+Copy the SQL from `docs/schema/DATABASE_SCHEMA.sql` and run it in the Supabase SQL Editor (Dashboard → SQL Editor → New Query).
 
 ### 5. Start Development Server
 
