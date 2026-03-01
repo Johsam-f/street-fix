@@ -4,7 +4,7 @@ Community Resource Sharing App for Informal Settlements in Blantyre, Malawi.
 
 ## Overview
 
-Street Fix empowers residents of informal settlements (Mbayani, Ntopwa, Ndirande) to report issues, find community resources, and connect with neighbors.
+Street Fix empowers residents of informal settlements (Mbayani, Chirimba, Ndirande, etc) to report issues, find community resources, and connect with neighbors.
 
 ### Features
 
