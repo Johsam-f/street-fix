@@ -25,7 +25,9 @@ export default async function ForumPage({
 
         <div>
           <h2 className="text-2xl font-semibold mb-4">Forum Posts</h2>
-          <ForumCategoryFilter />
+          <Suspense fallback={<div className="h-10 mb-6" />}>
+            <ForumCategoryFilter />
+          </Suspense>
           <Suspense
             key={params.category || 'all'}
             fallback={
