@@ -25,18 +25,20 @@ export default async function IssuesPage({
 
         <div>
           <h2 className="text-2xl font-semibold mb-4">Recent Issues</h2>
-          <IssueListWrapper>
-            <Suspense
-              key={`${params.category || 'all'}-${params.status || 'all'}`}
-              fallback={
-                <div className="border rounded-lg p-8 text-center text-muted-foreground">
-                  <p>Loading issues...</p>
-                </div>
-              }
-            >
-              <IssueList category={params.category} status={params.status} />
-            </Suspense>
-          </IssueListWrapper>
+          <Suspense fallback={<div className="h-20" />}>
+            <IssueListWrapper>
+              <Suspense
+                key={`${params.category || 'all'}-${params.status || 'all'}`}
+                fallback={
+                  <div className="border rounded-lg p-8 text-center text-muted-foreground">
+                    <p>Loading issues...</p>
+                  </div>
+                }
+              >
+                <IssueList category={params.category} status={params.status} />
+              </Suspense>
+            </IssueListWrapper>
+          </Suspense>
         </div>
       </div>
     </ScrollArea>
