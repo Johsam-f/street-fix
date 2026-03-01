@@ -4,6 +4,17 @@ import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { deleteResource } from './actions';
 import { toast } from 'sonner';
 import { MapPin, Trash2 } from 'lucide-react';
@@ -41,15 +52,13 @@ const typeLabels = {
 export function AdminResourceCard({ resource }: AdminResourceCardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const handleDelete = async () => {
-    if (!confirm(`Are you sure you want to delete "${resource.name}"?`)) {
-      return;
-    }
-
     setIsDeleting(true);
     const result = await deleteResource(resource.id);
     setIsDeleting(false);
+    setShowDeleteDialog(false);
 
     if (result.error) {
       toast.error(result.error);
@@ -73,14 +82,35 @@ export function AdminResourceCard({ resource }: AdminResourceCardProps) {
               {typeLabels[resource.type]}
             </Badge>
           </div>
-          <Button
-            size="sm"
-            variant="destructive"
-            onClick={handleDelete}
-            disabled={isDeleting}
-          >
-            <Trash2 className="w-4 h-4" />
-          </Button>
+          <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+            <AlertDialogTrigger asChild>
+              <Button
+                size="sm"
+                variant="destructive"
+                disabled={isDeleting}
+              >
+                <Trash2 className="w-4 h-4" />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete Resource?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Are you sure you want to delete "{resource.name}"? This action cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  variant="destructive"
+                  onClick={handleDelete}
+                  disabled={isDeleting}
+                >
+                  {isDeleting ? 'Deleting...' : 'Delete'}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
 
         {resource.description && (

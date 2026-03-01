@@ -4,6 +4,17 @@ import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { updateIssueStatus, deleteIssue } from './actions';
 import { toast } from 'sonner';
 import { formatDistanceToNow } from 'date-fns';
@@ -49,6 +60,7 @@ export function AdminIssueCard({ issue }: AdminIssueCardProps) {
   const [currentStatus, setCurrentStatus] = useState(issue.status);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const handleStatusUpdate = async (newStatus: 'open' | 'in_progress' | 'resolved') => {
     setIsUpdating(true);
@@ -64,13 +76,10 @@ export function AdminIssueCard({ issue }: AdminIssueCardProps) {
   };
 
   const handleDelete = async () => {
-    if (!confirm('Are you sure you want to delete this issue? This action cannot be undone.')) {
-      return;
-    }
-
     setIsDeleting(true);
     const result = await deleteIssue(issue.id);
     setIsDeleting(false);
+    setShowDeleteDialog(false);
 
     if (result.error) {
       toast.error(result.error);
@@ -152,14 +161,35 @@ export function AdminIssueCard({ issue }: AdminIssueCardProps) {
                   Resolve
                 </Button>
               )}
-              <Button
-                size="sm"
-                variant="destructive"
-                onClick={handleDelete}
-                disabled={isUpdating || isDeleting}
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
+              <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    disabled={isUpdating || isDeleting}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Delete Issue?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Are you sure you want to delete this issue? This action cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      variant="destructive"
+                      onClick={handleDelete}
+                      disabled={isDeleting}
+                    >
+                      {isDeleting ? 'Deleting...' : 'Delete'}
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </div>
         </div>
