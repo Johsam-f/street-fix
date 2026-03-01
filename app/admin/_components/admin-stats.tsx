@@ -6,19 +6,21 @@ import { AlertCircle, MapPin, MessageSquare, Heart } from 'lucide-react';
 const getStats = cache(async () => {
   const supabase = await createClient();
 
-  const [issuesResult, resourcesResult, postsResult, shoutoutsResult] = await Promise.all([
-    supabase.from('issues').select('status', { count: 'exact' }),
+  const [openResult, inProgressResult, resolvedResult, resourcesResult, postsResult, shoutoutsResult] = await Promise.all([
+    supabase.from('issues').select('id', { count: 'exact', head: true }).eq('status', 'open'),
+    supabase.from('issues').select('id', { count: 'exact', head: true }).eq('status', 'in_progress'),
+    supabase.from('issues').select('id', { count: 'exact', head: true }).eq('status', 'resolved'),
     supabase.from('resources').select('*', { count: 'exact', head: true }),
     supabase.from('forum_posts').select('*', { count: 'exact', head: true }),
     supabase.from('shoutouts').select('*', { count: 'exact', head: true }),
   ]);
 
-  const openIssues = issuesResult.data?.filter((i) => i.status === 'open').length || 0;
-  const inProgressIssues = issuesResult.data?.filter((i) => i.status === 'in_progress').length || 0;
-  const resolvedIssues = issuesResult.data?.filter((i) => i.status === 'resolved').length || 0;
+  const openIssues = openResult.count || 0;
+  const inProgressIssues = inProgressResult.count || 0;
+  const resolvedIssues = resolvedResult.count || 0;
 
   return {
-    totalIssues: issuesResult.count || 0,
+    totalIssues: openIssues + inProgressIssues + resolvedIssues,
     openIssues,
     inProgressIssues,
     resolvedIssues,
