@@ -5,10 +5,10 @@ import Link from "next/link";
 import { MapPin, AlertCircle, Map, MessageSquare, Heart, LayoutDashboard } from "lucide-react";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { LogoutButton } from "@/components/logout-button";
-
-export const dynamic = 'force-dynamic';
+import { unstable_noStore as noStore } from 'next/cache';
 
 const getUser = cache(async () => {
+  noStore();
   const supabase = await createClient();
   return await supabase.auth.getUser();
 });
