@@ -212,13 +212,12 @@ export async function deleteIssue(issueId: string) {
     if (issue?.image_url) {
       try {
         // Extract the file path from the public URL
-        // URL format: https://xxx.supabase.co/storage/v1/object/public/issue-images/filename
+        // URL format: https://xxx.supabase.co/storage/v1/object/public/issue-images/path/to/file
         const url = new URL(issue.image_url);
-        const pathParts = url.pathname.split('/');
-        const filePathIndex = pathParts.indexOf('issue-images');
+        const bucketPrefix = '/storage/v1/object/public/issue-images/';
         
-        if (filePathIndex !== -1) {
-          const filePath = pathParts.slice(filePathIndex).join('/');
+        if (url.pathname.startsWith(bucketPrefix)) {
+          const filePath = decodeURIComponent(url.pathname.slice(bucketPrefix.length));
           
           const { error: storageError } = await supabase.storage
             .from('issue-images')
