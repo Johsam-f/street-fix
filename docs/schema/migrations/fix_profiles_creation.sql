@@ -8,10 +8,10 @@
 -- Drop existing policy if it exists
 DROP POLICY IF EXISTS "Enable insert for authenticated users during sign up" ON profiles;
 
--- Allow the trigger function to insert profiles
+-- Allow authenticated users to insert only their own profile, and prevent setting is_admin
 CREATE POLICY "Enable insert for authenticated users during sign up" 
   ON profiles FOR INSERT 
-  WITH CHECK (true);
+  WITH CHECK (auth.uid() = id AND is_admin = false);
 
 -- ============================================
 -- Step 2: Recreate the trigger function (with error handling)
