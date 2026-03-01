@@ -4,6 +4,8 @@ import { IssueList } from './_components/issue-list';
 import { IssueListWrapper } from './_components/issue-list-wrapper';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
+export const dynamic = 'force-dynamic';
+
 export default async function IssuesPage({
   searchParams,
 }: {

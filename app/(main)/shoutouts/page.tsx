@@ -3,6 +3,8 @@ import { ShoutoutForm } from './_components/shoutout-form';
 import { ShoutoutList } from './_components/shoutout-list';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
+export const dynamic = 'force-dynamic';
+
 export default function ShoutoutsPage() {
   return (
     <ScrollArea className="h-full w-full">

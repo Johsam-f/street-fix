@@ -1,6 +1,8 @@
 import { Suspense } from 'react';
 import { MapWrapper } from './_components/map-wrapper';
 
+export const dynamic = 'force-dynamic';
+
 export default function MapPage() {
   return (
     <div className="h-full flex flex-col">

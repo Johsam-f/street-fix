@@ -11,6 +11,8 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { unstable_noStore as noStore } from 'next/cache';
 
+export const dynamic = 'force-dynamic';
+
 const getUser = cache(async () => {
   noStore();
   const supabase = await createClient();

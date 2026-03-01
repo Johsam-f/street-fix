@@ -4,6 +4,8 @@ import { ForumPostList } from './_components/forum-post-list';
 import { ForumCategoryFilter } from './_components/forum-category-filter';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ForumPage({
   searchParams,
 }: {
