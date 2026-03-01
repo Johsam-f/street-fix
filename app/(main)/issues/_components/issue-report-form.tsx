@@ -72,7 +72,7 @@ export function IssueReportForm() {
         },
         (error) => {
           console.error('Error getting location:', error);
-          alert('Unable to get your location. Please enable location services.');
+          toast.error('Unable to get your location. Please enable location services.');
           setIsLoadingLocation(false);
         },
         {
@@ -82,7 +82,7 @@ export function IssueReportForm() {
         }
       );
     } else {
-      alert('Geolocation is not supported by your browser.');
+      toast.error('Geolocation is not supported by your browser.');
       setIsLoadingLocation(false);
     }
   };
