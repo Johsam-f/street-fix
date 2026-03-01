@@ -66,3 +66,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Leaflet map fixes */
+.leaflet-container {
+  @apply h-full w-full;
+}
+
+.leaflet-popup-content-wrapper {
+  @apply rounded-lg;
+}
+
+.leaflet-popup-content {
+  @apply m-0;
+}
