@@ -41,7 +41,7 @@ export function ForumPostCard({ post }: ForumPostCardProps) {
           </Badge>
         </div>
 
-        <p className="text-muted-foreground line-clamp-3">{post.content}</p>
+        <p className="text-muted-foreground line-clamp-3 break-words">{post.content}</p>
 
         <div className="flex items-center justify-between text-sm text-muted-foreground pt-2 border-t">
           <span>
