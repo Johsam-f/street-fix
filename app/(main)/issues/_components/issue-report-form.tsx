@@ -8,6 +8,9 @@ import { Card } from '@/components/ui/card';
 import { createIssue } from './actions';
 import { Locate } from 'lucide-react';
 import { toast } from 'sonner';
+import Image from 'next/image';
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 const CATEGORIES = [
   { value: 'water', label: 'Water' },
@@ -89,8 +92,31 @@ export function IssueReportForm() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Validate file size
+      if (file.size > MAX_FILE_SIZE) {
+        toast.error(`Image must be smaller than 5MB. Your file is ${(file.size / 1024 / 1024).toFixed(2)}MB`);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+        return;
+      }
+
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        toast.error('Please select a valid image file');
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+        return;
+      }
+
       setImageFile(file);
       const reader = new FileReader();
+      reader.onerror = () => {
+        toast.error('Failed to read image file');
+        setImageFile(null);
+        setImagePreview('');
+      };
       reader.onloadend = () => {
         setImagePreview(reader.result as string);
       };
@@ -237,10 +263,12 @@ export function IssueReportForm() {
           />
           {imagePreview && (
             <div className="mt-2 relative">
-              <img
+              <Image
                 src={imagePreview}
                 alt="Preview"
                 className="max-w-full h-48 object-cover rounded-md"
+                width={400}
+                height={200}
               />
               <Button
                 type="button"
