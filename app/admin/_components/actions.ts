@@ -211,13 +211,13 @@ export async function deleteIssue(issueId: string) {
     // Delete the image from storage if it exists
     if (issue?.image_url) {
       try {
-        // Extract the file path from the public URL
-        // URL format: https://xxx.supabase.co/storage/v1/object/public/issue-images/path/to/file
-        const url = new URL(issue.image_url);
-        const bucketPrefix = '/storage/v1/object/public/issue-images/';
-        
-        if (url.pathname.startsWith(bucketPrefix)) {
-          const filePath = decodeURIComponent(url.pathname.slice(bucketPrefix.length));
+        // Extract just the filename from the URL
+        // URL format: https://xxx.supabase.co/storage/v1/object/public/issue-images/issues/userid-timestamp.ext
+        const urlParts = issue.image_url.split('/issue-images/');
+        if (urlParts.length === 2) {
+          const filePath = decodeURIComponent(urlParts[1]);
+          
+          console.log('Attempting to delete image at path:', filePath);
           
           const { error: storageError } = await supabase.storage
             .from('issue-images')
@@ -226,7 +226,11 @@ export async function deleteIssue(issueId: string) {
           if (storageError) {
             console.error('Error deleting image from storage:', storageError);
             // Continue with issue deletion even if image deletion fails
+          } else {
+            console.log('Image deleted successfully');
           }
+        } else {
+          console.warn('Could not parse image URL:', issue.image_url);
         }
       } catch (urlError) {
         console.error('Error parsing image URL:', urlError);
@@ -242,13 +246,13 @@ export async function deleteIssue(issueId: string) {
 
     if (deleteError) {
       console.error('Error deleting issue:', deleteError);
-      return { error: 'Failed to delete issue' };
+      return { error: `Failed to delete issue: ${deleteError.message || 'Unknown error'}` };
     }
 
     revalidatePath('/admin');
     revalidatePath('/issues');
     revalidatePath('/map');
-    return { error: null };
+    return { success: true, error: null };
   } catch (error) {
     console.error('Unexpected error:', error);
     return { error: 'An unexpected error occurred' };
